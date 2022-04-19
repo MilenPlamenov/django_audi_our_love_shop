@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'audi_our_love_shop_project.shop_authentication',
+    'audi_our_love_shop_project.main',
 ]
 
 MIDDLEWARE = [
