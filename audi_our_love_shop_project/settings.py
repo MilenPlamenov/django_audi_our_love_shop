@@ -104,3 +104,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'shop_authentication.ShopUser'
+
+LOGOUT_REDIRECT_URL = "/"

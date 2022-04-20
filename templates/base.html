@@ -6,6 +6,11 @@
 </head>
 <body>
 <h1>Main page</h1>
-{{ request.user }}
+{% if request.user.is_authenticated %}
+    {{ request.user }}
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    No authenticated user!
+{% endif %}
 </body>
 </html>
