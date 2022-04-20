@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model, login
+from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.views.generic import CreateView
 
@@ -18,3 +19,7 @@ class CreateAccount(CreateView):
         user.save()
         login(self.request, user)
         return redirect('index')
+
+
+class LoginAccount(LoginView):
+    template_name = 'authentication/login_user.html'
