@@ -1,16 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="container form-control w-75 p-2 h-2">
-        {{ form }}
-        <input type="submit" value="Register">
-    </div>
-</form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<title>Login page</title>{% endblock %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'css/authentication/login_and_register.css' %}">
+    {% endblock %}
+
+{% block content %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="wrapper bg-dark">
+            <div class="logo"><img
+                    src="{% static 'images/winner.jpg' %}"
+                    alt=""></div>
+            <div class="text-center text-light mt-4 name">Log in</div>
+            <div class="form-field d-flex align-items-center"><span class="far fa-user"></span> {{ form.username }}
+            </div>
+            <div class="form-field d-flex align-items-center"><span class="fas fa-key"></span> {{ form.password }}
+            </div>
+            <button class="btn mt-3">Login</button>
+            <div class="text-center fs-6"><a href="#">Forgotten password?</a></div>
+            <div class="text-center text-light fs-6"><span>Don't have an account? <a href="{% url 'create account' %}">Register</a></span>
+            </div>
+        </div>
+    </form>
+{% endblock %}

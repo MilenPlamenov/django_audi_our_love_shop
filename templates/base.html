@@ -6,9 +6,11 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <meta charset="UTF-8">
     {% block title %}<title>Main page</title>{% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="">
+    {% endblock %}
 </head>
 <body>
-
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
@@ -21,6 +23,8 @@
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contacts</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
@@ -36,6 +40,8 @@
             </ul>
             <ul class="navbar-nav  mb-2 mb-lg-0 ms-lg-4">
                 {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="#">{{ request.user }}</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'logout' %}">Log out</a>
                     </li>
                 {% else %}

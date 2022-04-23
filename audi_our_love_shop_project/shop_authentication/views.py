@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.views.generic import CreateView
 
-from audi_our_love_shop_project.shop_authentication.forms import RegisterUsers
+from audi_our_love_shop_project.shop_authentication.forms import RegisterUsers, LoginForm
 
 ShopUser = get_user_model()
 
@@ -23,3 +23,5 @@ class CreateAccount(CreateView):
 
 class LoginAccount(LoginView):
     template_name = 'authentication/login_user.html'
+    form_class = LoginForm
+
