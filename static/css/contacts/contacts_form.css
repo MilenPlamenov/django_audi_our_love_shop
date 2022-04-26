@@ -1,0 +1,24 @@
+body {
+    font-family: 'Lato', sans-serif
+}
+
+label {
+    color: #333
+}
+
+.btn-send {
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    width: 80%;
+    margin-left: 3px
+}
+
+.help-block.with-errors {
+    color: #ff5050;
+    margin-top: 5px
+}
+
+.card {
+    margin-left: 10px;
+    margin-right: 10px
+}
