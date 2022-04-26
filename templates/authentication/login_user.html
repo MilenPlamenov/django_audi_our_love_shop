@@ -2,9 +2,9 @@
 {% load static %}
 {% block title %}<title>Login page</title>{% endblock %}
 
-    {% block css %}
+{% block css %}
     <link rel="stylesheet" href="{% static 'css/authentication/login_and_register.css' %}">
-    {% endblock %}
+{% endblock %}
 
 {% block content %}
 
@@ -19,6 +19,13 @@
             </div>
             <div class="form-field d-flex align-items-center"><span class="fas fa-key"></span> {{ form.password }}
             </div>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
             <button class="btn mt-3">Login</button>
             <div class="text-center fs-6"><a href="#">Forgotten password?</a></div>
             <div class="text-center text-light fs-6"><span>Don't have an account? <a href="{% url 'create account' %}">Register</a></span>

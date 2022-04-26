@@ -21,8 +21,18 @@
             </div>
             <div class="form-field d-flex align-items-center"><span class="fas fa-key"></span> {{ form.password2 }}
             </div>
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
             <button class="btn mt-3">Register</button>
-            <div class="text-center text-dark fs-6"><span>Already have an account? <a class="text-dark" href="{% url 'login' %}">Login</a></span>
+            <div class="text-center text-dark fs-6"><span>Already have an account? <a class="text-dark"
+                                                                                      href="{% url 'login' %}">Login</a></span>
             </div>
         </div>
     </form>
