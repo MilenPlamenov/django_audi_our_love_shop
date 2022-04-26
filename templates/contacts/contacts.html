@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: 'Lato', sans-serif
+        }
+
+        h1 {
+            margin-bottom: 40px
+        }
+
+        label {
+            color: #333
+        }
+
+        .btn-send {
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            width: 80%;
+            margin-left: 3px
+        }
+
+        .help-block.with-errors {
+            color: #ff5050;
+            margin-top: 5px
+        }
+
+        .card {
+            margin-left: 10px;
+            margin-right: 10px
+        }
+    </style>
+    <div class="container">
+        <div class=" text-center mt-5 ">
+            <h1>Contact Us</h1>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row ">
+                <div class="col-lg-7 mx-auto">
+                    <div class="card mt-2 mx-auto p-4 bg-light">
+                        <div class="card-body bg-light">
+                            <div class="container">
+                                <form id="contact-form" role="form">
+                                    <div class="controls">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group"><label for="form_name">First
+                                                    Name</label>{{ form.first_name }}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group"><label for="form_lastname">Last
+                                                    Name</label>{{ form.last_name }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group"><label
+                                                        for="form_email">Email</label>{{ form.email }}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group"><label for="form_need">Please specify your need
+                                                </label>{{ form.reason }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group"><label for="form_message">Message</label>
+                                                    {{ form.content }}</div>
+                                            </div>
+                                            <div class="col-md-12 text-center p-3"><input type="submit"
+                                                                                          class="btn btn-success btn-send p-2 btn-block "
+                                                                                          value="Send Message"></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> <!-- /.8 -->
+                </div> <!-- /.row-->
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
