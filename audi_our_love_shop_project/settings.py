@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'audi_our_love_shop_project.shop_authentication',
     'audi_our_love_shop_project.main',
     'audi_our_love_shop_project.contacts',
+    'audi_our_love_shop_project.blogs',
 ]
 
 MIDDLEWARE = [
