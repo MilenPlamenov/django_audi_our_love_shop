@@ -30,14 +30,13 @@
                                 </div>
                                 <h2>{{ last_blog.subject }}</h2>
                                 <p>{{ last_blog.short_description }}</p>
-                                <a class="btn btn-blue" href="#">Read More</a>
+                                <a class="btn btn-blue" href="{% url 'blog post' last_blog.id %}">Read More</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- banner area end -->
-
             <div class="container p-2">
                 <div class="row">
                     {% for blog in blogs %}
@@ -47,7 +46,7 @@
                                     <img class="img-fluid" src="{{ blog.image_url.url }}" alt="img">
                                 </div>
                                 <div class="details">
-                                    <h6 class="title"><a href="#">{{ blog.subject }}</a></h6>
+                                    <h6 class="title"><a href="{% url 'blog post' blog.id %}">{{ blog.subject }}</a></h6>
                                     <p>{{ blog.short_description }}</p>
                                     <div class="post-meta-single mt-3">
                                         <ul>
@@ -58,8 +57,6 @@
                             </div>
                         </div>
                     {% endfor %}
-
-
                 </div>
             </div>
         </div>
