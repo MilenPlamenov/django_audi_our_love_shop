@@ -9,5 +9,4 @@ class CommentForm(forms.ModelForm):
         fields = ('email', 'body')
         widgets = {
             'body': forms.Textarea(attrs={'rows': '4', 'class': 'form-control'})
-
         }

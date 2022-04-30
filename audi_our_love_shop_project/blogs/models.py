@@ -34,7 +34,6 @@ class Comment(models.Model):
     email = models.EmailField()
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=False)
 
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments')
 

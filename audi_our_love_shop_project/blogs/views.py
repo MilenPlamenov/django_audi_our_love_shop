@@ -1,5 +1,5 @@
-
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.views.generic import DetailView
 
 from audi_our_love_shop_project.blogs.forms import CommentForm
@@ -38,26 +38,27 @@ class BlogPostDetailsView(DetailView):
 def blog_details(request, pk):
     blog_post = Blog.objects.get(pk=pk)
     blogs = Blog.objects.all()
-    comments = blog_post.comments.filter(active=True)
-    new_comment = None
+    comments = blog_post.comments.all()
+
     # Comment posted
     if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
+        comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-
-            # Create Comment object but don't save to database yet
-            new_comment = comment_form.save(commit=False)
-            # Assign the current post to the comment
-            new_comment.blog_post = blog_post
-            # Save the comment to the database
-            new_comment.save()
+            comment = comment_form.save(commit=False)  # don't save the comment yet
+            comment.blog_post = blog_post  # assign the blog
+            comment.blog_id = blog_post.id
+            comment.save()  # then save
+            return HttpResponseRedirect(request.path_info)
     else:
-        comment_form = CommentForm()
+        if request.user.is_authenticated:
+            comment_form = CommentForm(initial={'email': request.user.email})
+        else:
+            comment_form = CommentForm()
+
     context = {
         'object': blog_post,
         'blogs': blogs,
         'comments': comments,
-        'new_comment': new_comment,
         'comment_form': comment_form,
     }
 
