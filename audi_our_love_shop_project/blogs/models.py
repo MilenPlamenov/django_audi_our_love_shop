@@ -28,3 +28,18 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.subject
+
+
+class Comment(models.Model):
+    email = models.EmailField()
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=False)
+
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments')
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return f'Comment {self.body} written by {self.email}'

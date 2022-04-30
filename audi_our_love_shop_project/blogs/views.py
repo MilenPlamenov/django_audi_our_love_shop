@@ -1,6 +1,8 @@
+
 from django.shortcuts import render
 from django.views.generic import DetailView
 
+from audi_our_love_shop_project.blogs.forms import CommentForm
 from audi_our_love_shop_project.blogs.models import Blog
 
 
@@ -31,3 +33,32 @@ class BlogPostDetailsView(DetailView):
         context = super().get_context_data(**kwargs)
         context['blogs'] = Blog.objects.all()
         return context
+
+
+def blog_details(request, pk):
+    blog_post = Blog.objects.get(pk=pk)
+    blogs = Blog.objects.all()
+    comments = blog_post.comments.filter(active=True)
+    new_comment = None
+    # Comment posted
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+
+            # Create Comment object but don't save to database yet
+            new_comment = comment_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.blog_post = blog_post
+            # Save the comment to the database
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+    context = {
+        'object': blog_post,
+        'blogs': blogs,
+        'comments': comments,
+        'new_comment': new_comment,
+        'comment_form': comment_form,
+    }
+
+    return render(request, 'blogs/blog_post.html', context)

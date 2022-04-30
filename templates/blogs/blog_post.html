@@ -30,71 +30,73 @@
                     <div class="card bg-light">
                         <div class="card-body">
                             <!-- Comment form-->
-                            <form class="mb-4"><textarea class="form-control" rows="3"
-                                                         placeholder="Join the discussion and leave a comment!"></textarea>
-                            </form>
-                            <!-- Comment with nested comments-->
-                            <div class="d-flex mb-4">
-                                <!-- Parent comment-->
-                                <div class="flex-shrink-0"><img class="rounded-circle"
-                                                                src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                                                alt="..."/></div>
-                                <div class="ms-3">
-                                    <div class="fw-bold">Commenter Name</div>
-                                    If you're going to lead a space frontier, it has to be government; it'll never be
-                                    private enterprise. Because the space frontier is dangerous, and it's expensive, and
-                                    it has unquantified risks.
-                                    <!-- Child comment 1-->
-                                    <div class="d-flex mt-4">
-                                        <div class="flex-shrink-0"><img class="rounded-circle"
-                                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                                                        alt="..."/></div>
-                                        <div class="ms-3">
-                                            <div class="fw-bold">Commenter Name</div>
-                                            And under those conditions, you cannot establish a capital-market evaluation
-                                            of that enterprise. You can't get investors.
-                                        </div>
+                            {% if request.user.is_authenticated %}
+                                <form method="post" class="mb-4">
+                                    {% csrf_token %}
+                                    <div class="row ">
+                                        <div class="col-lg-7 mx-auto">
+                                            <div class="card mt-2 mx-auto p-4 bg-light">
+                                                <div class="card-body bg-light">
+                                                    <div class="container">
+                                                        <form id="contact-form" role="form">
+                                                            <div class="controls">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group"><label
+                                                                                for="form_email">Email</label>{{ comment_form.email }}
+                                                                        </div>
+                                                                    </div>
+
+                                                                        <div class="form-group"><label
+                                                                                for="form_message">Message</label>
+                                                                            {{ comment_form.body }}</div>
+
+                                                                    {% if form.errors %}
+                                                                        {% for field in form %}
+                                                                            {% for error in field.errors %}
+                                                                                <div class="alert alert-danger">
+                                                                                    <strong>{{ error|escape }}</strong>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                    <div class="col-md-12 text-center p-3"><input
+                                                                            type="submit"
+                                                                            class="btn btn-success btn-send p-2 btn-block "
+                                                                            value="Send Message"></div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- /.8 -->
+                                        </div> <!-- /.row-->
                                     </div>
-                                    <!-- Child comment 2-->
-                                    <div class="d-flex mt-4">
-                                        <div class="flex-shrink-0"><img class="rounded-circle"
-                                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                                                        alt="..."/></div>
-                                        <div class="ms-3">
-                                            <div class="fw-bold">Commenter Name</div>
-                                            When you put money directly to a problem, it makes a good headline.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                </form>
+                            {% else %}
+                                <a href="{% url 'login' %}">Login to be able to comment</a>
+                            {% endif %}
+
                             <!-- Single comment-->
-                            <div class="d-flex">
-                                <div class="flex-shrink-0"><img class="rounded-circle"
-                                                                src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                                                alt="..."/></div>
-                                <div class="ms-3">
-                                    <div class="fw-bold">Commenter Name</div>
-                                    When I look at the universe and all the ways the universe wants to kill us, I find
-                                    it hard to reconcile that with statements of beneficence.
-                                </div>
-                            </div>
+                            {% if comments %}
+                                {% for comment in comments %}
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0"><img class="rounded-circle"
+                                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                                                                        alt="..."/></div>
+                                        <div class="ms-3">
+                                            <div class="fw-bold">{{ comment.email }}</div>
+                                            {{ comment.body | linebreaks }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                 </section>
             </div>
             <!-- Side widgets-->
             <div class="col-lg-4">
-                <!-- Search widget-->
-                <div class="card mb-4">
-                    <div class="card-header">Search</div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Enter search term..."
-                                   aria-label="Enter search term..." aria-describedby="button-search"/>
-                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                        </div>
-                    </div>
-                </div>
                 <!-- Categories widget-->
                 <div class="card mb-4">
                     <div class="card-header">Other interesting blogs</div>
@@ -105,7 +107,7 @@
                                     {% if blogs %}
                                         {% for blog in blogs %}
                                             {% if not blog.id == object.id %}
-                                            <li><a href="{% url 'blog post' blog.id %}">{{ blog.subject }}</a></li>
+                                                <li><a href="{% url 'blog post' blog.id %}">{{ blog.subject }}</a></li>
                                             {% endif %}
                                         {% endfor %}
                                     {% endif %}
