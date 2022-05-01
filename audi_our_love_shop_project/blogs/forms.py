@@ -10,3 +10,4 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'body': forms.Textarea(attrs={'rows': '4', 'class': 'form-control'})
         }
+

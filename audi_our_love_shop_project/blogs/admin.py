@@ -15,7 +15,6 @@ class ContactsAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()

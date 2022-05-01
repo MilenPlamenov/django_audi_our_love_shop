@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import DetailView
 
 from audi_our_love_shop_project.blogs.forms import CommentForm
-from audi_our_love_shop_project.blogs.models import Blog
+from audi_our_love_shop_project.blogs.models import Blog, Comment
 
 
 def blog(request):
@@ -35,19 +35,36 @@ class BlogPostDetailsView(DetailView):
         return context
 
 
+# most of the code from stackoverflow
 def blog_details(request, pk):
     blog_post = Blog.objects.get(pk=pk)
     blogs = Blog.objects.all()
-    comments = blog_post.comments.all()
+    comments = blog_post.comments.filter(parent__isnull=True)
 
-    # Comment posted
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-            comment = comment_form.save(commit=False)  # don't save the comment yet
-            comment.blog_post = blog_post  # assign the blog
+            parent_obj = None
+            # get parent comment id from hidden input
+            try:
+                # id integer e.g. 15
+                parent_id = int(request.POST.get('parent_id'))
+            except:
+                parent_id = None
+            # if parent_id has been submitted get parent_obj id
+            if parent_id:
+                parent_obj = Comment.objects.get(id=parent_id)
+                # if parent object exist
+                if parent_obj:
+                    # create replay comment object
+                    replay_comment = comment_form.save(commit=False)
+                    # assign parent_obj to replay comment
+                    replay_comment.parent = parent_obj
+
+            comment = comment_form.save(commit=False)
+            comment.blog_post = blog_post
             comment.blog_id = blog_post.id
-            comment.save()  # then save
+            comment.save()
             return HttpResponseRedirect(request.path_info)
     else:
         if request.user.is_authenticated:

@@ -30,47 +30,62 @@
                     <div class="card bg-light">
                         <div class="card-body">
                             <!-- Comment form-->
-                            {% if request.user.is_authenticated %}
-                                <form method="post" class="mb-4">
-                                    {% csrf_token %}
-                                    <div class="container">
-                                        <div class="row">
-                                            <label for="email">Email:</label>
-                                            {{ comment_form.email }}
-                                        </div>
+                            <form method="post" class="mb-4">
+                                {% csrf_token %}
+                                <div class="container">
+                                    <div class="row">
+                                        <label for="email">Email:</label>
+                                        {{ comment_form.email }}
                                     </div>
-
-                                    <div class="form-group p-2">
-                                        <label for="pwd">Comment:</label>
-                                        {{ comment_form.body }}
-                                    </div>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-12 bg-light text-right">
-                                                <button type="submit" class="btn btn-outline-primary float-right">
-                                                    Submit
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            {% else %}
-                                <div class="container form-control col-md-auto">
-                                <a href="{% url 'login' %}">Only authenticated users are able to comment</a>
-
                                 </div>
-                            {% endif %}
 
-                            <!-- Single comment-->
+                                <div class="form-group p-2">
+                                    <label for="pwd">Comment:</label>
+                                    {{ comment_form.body }}
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12 bg-light text-right">
+                                            <button type="submit" class="btn btn-outline-primary float-right">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                             {% if comments %}
                                 {% for comment in comments %}
-                                    <div class="d-flex p-2">
+                                    <!-- Comment with nested comments-->
+                                    <div class="d-flex mb-4">
+                                        <!-- Parent comment-->
                                         <div class="flex-shrink-0"><img class="rounded-circle"
                                                                         src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
                                                                         alt="..."/></div>
                                         <div class="ms-3">
-                                            <div class="fw-bold">{{ comment.email }}</div>
-                                            {{ comment.body | linebreaks }}
+                                            <div class="fw-bold">{{ comment.email }} | {{ comment.when_published }}</div>
+                                            {{ comment.body }}
+                                            <!-- Child comment 1-->
+                                            {% for reply in comment.replies.all %}
+                                                <div class="d-flex mt-4">
+                                                    <div class="flex-shrink-0"><img class="rounded-circle"
+                                                                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                                                                                    alt="..."/></div>
+                                                    <div class="ms-3">
+                                                        <div class="fw-bold">{{ reply.email }}</div>
+                                                        {{ reply.body }}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                            <div class="p-4">
+                                                <h5>Reply:</h5>
+                                                <form method="post">
+                                                    {{ comment_form.as_p }}
+                                                    {% csrf_token %}
+                                                    <!-- Hidden input for parent comment.id -->
+                                                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                                    <input class="btn btn-primary" type="submit" value="Reply">
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endfor %}
