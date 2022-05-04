@@ -28,10 +28,6 @@ class Product(models.Model):
         default='No description',
     )
 
-    quantity = models.IntegerField(
-        default=1,
-    )
-
     category = models.CharField(
         choices=CATEGORY_CHOICES,
         max_length=CATEGORY_MAX_LENGTH,
@@ -43,7 +39,14 @@ class Product(models.Model):
 
 
 class OrderProduct(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+    )
+
+    quantity = models.IntegerField(
+        default=1,
+    )
 
 
 class Order(models.Model):
