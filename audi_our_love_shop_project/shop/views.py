@@ -1,12 +1,19 @@
 from django.shortcuts import render
+from django.views.generic import DetailView
+
+from audi_our_love_shop_project.shop.models import Product
 
 
 def home(request):
-    return render(request, 'shop/home-page.html')
+    context = {
+        'products': Product.objects.all(),
+    }
+    return render(request, 'shop/home-page.html', context)
 
 
-def product(request):
-    return render(request, 'shop/product-page.html')
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'shop/product-page.html'
 
 
 def checkout(request):
