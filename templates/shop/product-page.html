@@ -13,6 +13,18 @@
 {% endblock %}
 
 {% block content %}
+    <div class="mt-5 pt-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
     <!--Main layout-->
     <main class="mt-5 pt-4">
         <div class="container dark-grey-text mt-5">
@@ -59,16 +71,21 @@
 
                         <p>{{ object.description }}</p>
 
-{#                        <form class="d-flex justify-content-left">#}
-{#                            <!-- Default input -->#}
-{#                            <input type="number" value="1" aria-label="Search" class="form-control"#}
-{#                                   style="width: 100px">#}
-{#                            <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart#}
-{#                                <i class="fas fa-shopping-cart ml-1"></i>#}
-{#                            </button>#}
-{##}
-{#                        </form>#}
+                        {#                        <form class="d-flex justify-content-left">#}
+                        {#                            <!-- Default input -->#}
+                        {#                            <input type="number" value="1" aria-label="Search" class="form-control"#}
+                        {#                                   style="width: 100px">#}
+                        {#                            <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart#}
+                        {#                                <i class="fas fa-shopping-cart ml-1"></i>#}
+                        {#                            </button>#}
+                        {##}
+                        {#                        </form>#}
                         <a class="btn btn-primary btn-md my-0 p" href="{% url 'add-to-cart' product.pk %}">Add to cart
+                            <i class="fas fa-shopping-cart ml-1"></i>
+                        </a>
+
+                        <a class="btn btn-danger btn-md my-0 p" href="{% url 'remove-from-cart' product.pk %}">Remove
+                            from cart
                             <i class="fas fa-shopping-cart ml-1"></i>
                         </a>
 
