@@ -50,8 +50,9 @@
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item" href="#">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#">New Arrivals</a></li>
+                        <li><a class="dropdown-item" href="{% url 'parts' %}">Parts</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accessories' %}">Accessories</a></li>
+                        <li><a class="dropdown-item" href="{% url 'car-care' %}">Car Care</a></li>
                     </ul>
                 </li>
             </ul>
@@ -131,7 +132,7 @@
                                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                                 Iure, quas quidem possimus dolorum esse eligendi?
                             </p>
-                            <a href="#" class="btn btn-primary">Shop Now</a>
+                            <a href="{% url 'parts' %}" class="btn btn-primary">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -147,7 +148,7 @@
                                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                                 Iure, quas quidem possimus dolorum esse eligendi?
                             </p>
-                            <a href="#" class="btn btn-dark">Shop Now</a>
+                            <a href="{% url 'accessories' %}" class="btn btn-dark">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -163,7 +164,7 @@
                                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                                 Iure, quas quidem possimus dolorum esse eligendi?
                             </p>
-                            <a href="#" class="btn btn-primary">Shop Now</a>
+                            <a href="{% url 'car-care' %}" class="btn btn-primary">Shop Now</a>
                         </div>
                     </div>
                 </div>

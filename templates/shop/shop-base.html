@@ -42,23 +42,11 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'blogs' %}">Blog</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'contacts' %}">Contacts</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{% url 'home' %}">All Products</a></li>
-                        <li>
-                            <hr class="dropdown-divider"/>
-                        </li>
-                        <li><a class="dropdown-item" href="#">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#">New Arrivals</a></li>
-                    </ul>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Shop</a></li>
             </ul>
             <ul class="navbar-nav  mb-2 mb-lg-0 ms-lg-4">
                 {% if user.is_authenticated %}
@@ -90,20 +78,20 @@
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Audi Our Love 2022</p></div>
 </footer>
 
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="{% static 'js/shop/js/jquery-3.4.1.min.js/' %}"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="{% static 'js/shop/js/popper.min.js/' %}"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{% static 'js/shop/js/bootstrap.min.js/' %}"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{% static 'js/shop/js/mdb.min.js/' %}"></script>
-    <!-- Initializations -->
-    <script type="text/javascript">
-        // Animations initialization
-        new WOW().init();
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="{% static 'js/shop/js/jquery-3.4.1.min.js/' %}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static 'js/shop/js/popper.min.js/' %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static 'js/shop/js/bootstrap.min.js/' %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static 'js/shop/js/mdb.min.js/' %}"></script>
+<!-- Initializations -->
+<script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
 
-    </script>
+</script>
 </body>
 </html>
