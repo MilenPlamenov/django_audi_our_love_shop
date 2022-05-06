@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -95,13 +96,13 @@ def remove_single_item_from_cart(request, pk):
             else:
                 order.items.remove(order_product)
             messages.info(request, "This item quantity was updated.")
-            return redirect(reverse('product', kwargs={'pk': product.pk}))
+            return redirect(reverse('checkout'))
         else:
             messages.info(request, "This item was not in your cart")
-            return redirect(reverse('product', kwargs={'pk': product.pk}))
+            return redirect(reverse('checkout'))
     else:
         messages.info(request, "You do not have an active order")
-        return redirect(reverse('product', kwargs={'pk': product.pk}))
+        return redirect(reverse('checkout'))
 
 
 class ProductDetailView(DetailView):
@@ -110,4 +111,23 @@ class ProductDetailView(DetailView):
 
 
 def checkout(request):
-    return render(request, 'shop/checkout-page.html')
+    try:
+        order = Order.objects.get(user=request.user, ordered=False)
+        total = 0
+        total_items_count = 0
+
+        context = {
+            'order': order
+        }
+        if not order.items.all():
+            context['empty'] = 'Your cart is empty'
+        else:
+            for item in order.items.all():
+                total += item.product.price * item.quantity
+                total_items_count += item.quantity
+            context['total'] = total
+            context['total_items_count'] = total_items_count
+        return render(request, 'shop/checkout-page.html', context)
+    except ObjectDoesNotExist:
+        messages.warning(request, "You do not have an active order")
+        return redirect("/")
