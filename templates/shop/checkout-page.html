@@ -1,17 +1,5 @@
-{% extends 'base.html' %}
+{% extends 'shop/shop-base.html' %}
 {% load static %}
-
-{% block css %}
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/shop/css/bootstrap.min.css/' %}" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="{% static 'css/shop/css/mdb.min.css/' %}" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="{% static 'css/shop/css/style.min.css/' %}" rel="stylesheet">
-{% endblock %}
-
 
 {% block content %}
     <!--Main layout-->
@@ -264,20 +252,3 @@
     <!--Main layout-->
 {% endblock %}
 
-{% block js %}
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="{% static 'js/shop/js/jquery-3.4.1.min.js/' %}"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="{% static 'js/shop/js/popper.min.js/' %}"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{% static 'js/shop/js/bootstrap.min.js/' %}"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{% static 'js/shop/js/mdb.min.js/' %}"></script>
-    <!-- Initializations -->
-    <script type="text/javascript">
-        // Animations initialization
-        new WOW().init();
-
-    </script>
-{% endblock %}

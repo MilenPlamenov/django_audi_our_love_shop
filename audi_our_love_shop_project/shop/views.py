@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from audi_our_love_shop_project.shop.models import Product, OrderProduct, Order
 
@@ -15,6 +15,33 @@ def home(request):
         'products': Product.objects.all(),
     }
     return render(request, 'shop/home-page.html', context)
+
+
+class PartsListView(ListView):
+    model = Product
+    context_object_name = 'parts_products'
+    template_name = 'shop/parts-products.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(category=Product.PART)
+
+
+class AccessoriesListView(ListView):
+    model = Product
+    context_object_name = 'accessories_products'
+    template_name = 'shop/accessories-products.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(category=Product.ACCESSORY)
+
+
+class CarCareListView(ListView):
+    model = Product
+    context_object_name = 'car_care_products'
+    template_name = 'shop/car-care-products.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(category=Product.CAR_CARE)
 
 
 @login_required
