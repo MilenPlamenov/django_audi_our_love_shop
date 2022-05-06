@@ -64,10 +64,10 @@ def remove_from_cart(request, pk):
             )[0]
             order.items.remove(order_product)
             order_product.delete()
-            messages.info(request, "This item was removed from your cart.")
+            messages.info(request, "This product was removed from your cart.")
             return redirect(reverse('product', kwargs={'pk': product.pk}))
         else:
-            messages.info(request, "This item was not in your cart")
+            messages.info(request, "This product was not in your cart")
             return redirect(reverse('product', kwargs={'pk': product.pk}))
     else:
         messages.info(request, "You do not have an active order")
@@ -95,10 +95,10 @@ def remove_single_item_from_cart(request, pk):
                 order_product.save()
             else:
                 order.items.remove(order_product)
-            messages.info(request, "This item quantity was updated.")
+            messages.info(request, "This product quantity was updated.")
             return redirect(reverse('checkout'))
         else:
-            messages.info(request, "This item was not in your cart")
+            messages.info(request, "This product was not in your cart")
             return redirect(reverse('checkout'))
     else:
         messages.info(request, "You do not have an active order")
@@ -129,5 +129,5 @@ def checkout(request):
             context['total_items_count'] = total_items_count
         return render(request, 'shop/checkout-page.html', context)
     except ObjectDoesNotExist:
-        messages.warning(request, "You do not have an active order")
-        return redirect("/")
+        messages.warning(request, 'Cart is empty, you should add product to be able to access the checkout page!')
+        return redirect(reverse('home'))
