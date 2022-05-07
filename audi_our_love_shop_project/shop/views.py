@@ -150,7 +150,10 @@ def checkout(request):
             context['empty'] = 'Your cart is empty'
         else:
             for item in order.items.all():
-                total += item.product.price * item.quantity
+                if item.product.discount_price:
+                    total += item.get_total_discount_product_price()
+                else:
+                    total += item.get_total_product_price()
                 total_items_count += item.quantity
             context['total'] = total
             context['total_items_count'] = total_items_count

@@ -275,13 +275,22 @@
                                         <strong>
                                             <a href="{% url 'product' product.pk %}"
                                                class="dark-grey-text">{{ product.title }}
-                                                <span class="badge badge-pill danger-color">NEW</span>
+                                                {% if product.discount_price %}
+                                                    <span class="badge badge-pill danger-color">%</span>
+                                                {% endif %}
                                             </a>
                                         </strong>
                                     </h5>
 
                                     <h4 class="font-weight-bold blue-text">
-                                        <strong>{{ product.price }}$</strong>
+                                        {% if product.discount_price %}
+                                            <strong>
+                                                <del>{{ product.price }}</del>
+                                            </strong>
+                                            <strong>${{ product.discount_price }}</strong>
+                                        {% else %}
+                                            <strong>${{ product.price }}</strong>
+                                        {% endif %}
                                     </h4>
 
                                 </div>

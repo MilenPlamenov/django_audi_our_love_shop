@@ -22,6 +22,11 @@ class Product(models.Model):
     )
 
     price = models.FloatField()
+    discount_price = models.FloatField(
+        null=True,
+        blank=True,
+    )
+
     description = models.TextField(
         blank=True,
         null=True,
@@ -59,6 +64,15 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return self.product.title
+
+    def get_total_product_price(self):
+        return self.quantity * self.product.price
+
+    def get_total_discount_product_price(self):
+        return self.quantity * self.product.discount_price
+
+    def get_amount_saved(self):
+        return self.get_total_product_price() - self.get_total_discount_product_price()
 
 
 class Order(models.Model):

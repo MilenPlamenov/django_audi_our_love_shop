@@ -51,30 +51,21 @@
                             </div>
                             <!--Grid row-->
 
-                            <!--Username-->
-                            <div class="md-form input-group pl-0 mb-5">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">@</span>
-                                </div>
-                                <input type="text" class="form-control py-0" placeholder="Username"
-                                       aria-describedby="basic-addon1">
-                            </div>
-
                             <!--email-->
                             <div class="md-form mb-5">
-                                <input type="text" id="email" class="form-control" placeholder="youremail@example.com">
-                                <label for="email" class="">Email (optional)</label>
+                                <input type="text" id="email" class="form-control">
+                                <label for="email" class="">Email</label>
                             </div>
 
                             <!--address-->
                             <div class="md-form mb-5">
-                                <input type="text" id="address" class="form-control" placeholder="1234 Main St">
+                                <input type="text" id="address" class="form-control">
                                 <label for="address" class="">Address</label>
                             </div>
 
                             <!--address-2-->
                             <div class="md-form mb-5">
-                                <input type="text" id="address-2" class="form-control" placeholder="Apartment or suite">
+                                <input type="text" id="address-2" class="form-control">
                                 <label for="address-2" class="">Address 2 (optional)</label>
                             </div>
 
@@ -99,7 +90,7 @@
                                 <!--Grid column-->
                                 <div class="col-lg-4 col-md-6 mb-4">
 
-                                    <label for="state">State</label>
+                                    <label for="state">City</label>
                                     <select class="custom-select d-block w-100" id="state" required>
                                         <option value="">Choose...</option>
                                         <option>California</option>
@@ -115,7 +106,7 @@
                                 <div class="col-lg-4 col-md-6 mb-4">
 
                                     <label for="zip">Zip</label>
-                                    <input type="text" class="form-control" id="zip" placeholder="" required>
+                                    <input type="text" class="form-control" id="zip" required>
                                     <div class="invalid-feedback">
                                         Zip code required.
                                     </div>
@@ -125,21 +116,6 @@
 
                             </div>
                             <!--Grid row-->
-
-                            <hr>
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="same-address">
-                                <label class="custom-control-label" for="same-address">Shipping address is the same as
-                                    my billing address</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="save-info">
-                                <label class="custom-control-label" for="save-info">Save this information for next
-                                    time</label>
-                            </div>
-
-                            <hr>
 
                             <div class="d-block my-3">
                                 <div class="custom-control custom-radio">
@@ -192,6 +168,20 @@
                                 </div>
                             </div>
                             <hr class="mb-4">
+                            <hr>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="same-address">
+                                <label class="custom-control-label" for="same-address">Shipping address is the same as
+                                    my billing address</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="save-info">
+                                <label class="custom-control-label" for="save-info">Save this information for next
+                                    time</label>
+                            </div>
+
+                            <hr>
                             <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
 
                         </form>
@@ -213,32 +203,38 @@
 
                     <!-- Cart -->
                     <ul class="list-group mb-3 z-depth-1">
-                            {% for product in order.items.all %}
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">{{ product.product.title }}  ({{ product.quantity }})</h6>
-                                        <small class="text-muted"><a href="{% url 'remove-single-item-from-cart' product.product.id %}">Remove 1</a></small>
-                                    </div>
+                        {% for product in order.items.all %}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">{{ product.product.title }} ({{ product.quantity }})</h6>
+                                    <small class="text-muted"><a
+                                            href="{% url 'remove-single-item-from-cart' product.product.id %}">Remove
+                                        1</a></small>
+                                </div>
+                                {% if product.product.discount_price %}
+                                    <span class="text-muted">${{ product.product.discount_price }}</span>
+                                {% else %}
                                     <span class="text-muted">${{ product.product.price }}</span>
-                                </li>
-                            {% endfor %}
-                    {% if empty %}
-                        <h4>{{ empty }}</h4>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                        {% if empty %}
+                            <h4>{{ empty }}</h4>
                         {% else %}
                             <li class="list-group-item d-flex justify-content-between">
                                 <span>Total (USD)</span>
                                 <strong>${{ total }}</strong>
                             </li>
-                    {% endif %}
+                        {% endif %}
                     </ul>
                     <!-- Cart -->
 
                     <!-- Promo code -->
-                        <div class="input-group card p-2">
-                            <div class="input-group-append">
-                                <a href="{% url 'home' %}" class="btn btn-md btn-dark waves-effect m-0">Shop more</a>
-                            </div>
+                    <div class="input-group card p-2">
+                        <div class="input-group-append">
+                            <a href="{% url 'home' %}" class="btn btn-md btn-dark waves-effect m-0">Shop more</a>
                         </div>
+                    </div>
                     <!-- Promo code -->
 
                 </div>
