@@ -1,13 +1,27 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import DetailView, ListView
 
 from audi_our_love_shop_project.shop.models import Product, OrderProduct, Order
+
+
+class SearchResultsView(ListView):
+    model = Product
+    template_name = 'shop/search-results.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):  # new
+        query = self.request.GET.get("searched")
+        filtered_products = Product.objects.filter(title__icontains=query)
+        if not filtered_products:
+            messages.info(self.request, f"Our system didn't match any results with '{query}'")
+        else:
+            messages.info(self.request, f"Our system matched {len(filtered_products)} results with '{query}'")
+        return filtered_products
 
 
 def home(request):
