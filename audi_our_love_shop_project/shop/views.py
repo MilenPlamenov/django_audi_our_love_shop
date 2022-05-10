@@ -24,17 +24,18 @@ class SearchResultsView(ListView):
         return filtered_products
 
 
-def home(request):
-    context = {
-        'products': Product.objects.all(),
-    }
-    return render(request, 'shop/home-page.html', context)
+class AllProductsListView(ListView):
+    model = Product
+    context_object_name = 'products'
+    template_name = 'shop/home-page.html'
+    paginate_by = 8
 
 
 class PartsListView(ListView):
     model = Product
     context_object_name = 'parts_products'
     template_name = 'shop/parts-products.html'
+    paginate_by = 8
 
     def get_queryset(self):
         return Product.objects.filter(category=Product.PART)
@@ -44,6 +45,7 @@ class AccessoriesListView(ListView):
     model = Product
     context_object_name = 'accessories_products'
     template_name = 'shop/accessories-products.html'
+    paginate_by = 8
 
     def get_queryset(self):
         return Product.objects.filter(category=Product.ACCESSORY)
@@ -53,6 +55,7 @@ class CarCareListView(ListView):
     model = Product
     context_object_name = 'car_care_products'
     template_name = 'shop/car-care-products.html'
+    paginate_by = 8
 
     def get_queryset(self):
         return Product.objects.filter(category=Product.CAR_CARE)
