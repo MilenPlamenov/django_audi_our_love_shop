@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.views.generic import DetailView
+from django.shortcuts import render
+from django.views.generic import DetailView, ListView
 
 from audi_our_love_shop_project.blogs.forms import CommentForm
 from audi_our_love_shop_project.blogs.models import Blog, Comment
@@ -80,3 +80,14 @@ def blog_details(request, pk):
     }
 
     return render(request, 'blogs/blog_post.html', context)
+
+
+class BlogsSearch(ListView):
+    model = Blog
+    template_name = 'blogs/searched_blogs.html'
+    context_object_name = 'blogs'
+
+    def get_queryset(self):  # new
+        query = self.request.GET.get("searched")
+        filtered_blogs = Blog.objects.filter(subject__icontains=query)
+        return filtered_blogs

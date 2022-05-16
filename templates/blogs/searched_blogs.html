@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/blogs/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blogs/style.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="p-4">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        {% if blogs %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th></th>
+                                        <th scope="col">Blog</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Posted on</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="customtable">
+                                    {% for blog in blogs %}
+                                        <tr>
+                                            <th></th>
+                                            <td><a href="{% url 'blog post' blog.pk %}">{{ blog.subject }}</a></td>
+                                            <td>{{ blog.short_description }}</td>
+                                            <td>{{ blog.date }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <div class="card-body text-center">
+                                <h5 class="card-title m-b-0 p-3">Our system didn't match any results!</h5>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
