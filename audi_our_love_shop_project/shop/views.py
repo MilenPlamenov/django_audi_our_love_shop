@@ -178,3 +178,6 @@ def checkout(request):
     except ObjectDoesNotExist:
         messages.warning(request, 'Cart is empty, you should add product to be able to access the checkout page!')
         return redirect(reverse('home'))
+    except TypeError:
+        messages.warning(request, 'You must be authenticated to be able to access the checkout page!')
+        return redirect(reverse('home'))
