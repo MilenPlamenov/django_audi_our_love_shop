@@ -5,6 +5,7 @@ from django.db.models import ManyToManyField
 ShopUser = get_user_model()
 
 
+# model product needs to have also photo
 class Product(models.Model):
     TITLE_MAX_LENGTH = 50
     CATEGORY_MAX_LENGTH = 50
