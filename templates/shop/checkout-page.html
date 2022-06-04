@@ -208,10 +208,15 @@
                         {% for product in order.items.all %}
                             <li class="list-group-item d-flex justify-content-between lh-condensed">
                                 <div>
-                                    <h6 class="my-0">{{ product.product.title }} ({{ product.quantity }})</h6>
-                                    <small class="text-muted"><a
-                                            href="{% url 'remove-single-item-from-cart' product.product.id %}">Remove
-                                        1</a></small>
+                                    <h6 class="my-0">{{ product.product.title }} ({{ product.quantity }})
+                                        <a class="m-2" href="{% url 'add-to-cart' product.product.id %}"><i class="fas fa-plus"></i></a>
+                                        <a class="m-2"
+                                           href="{% url 'remove-single-item-from-cart' product.product.id %}"><i
+                                                class="fas fa-minus"></i></a>
+                                        <a class="m-2" href="{% url 'remove-from-cart' product.product.id %}"><i
+                                                class="fas fa-trash-alt"></i></a>
+                                    </h6>
+
                                 </div>
                                 {% if product.product.discount_price %}
                                     <span class="text-muted">${{ product.product.discount_price }}</span>
