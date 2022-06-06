@@ -1,8 +1,49 @@
 from django.contrib.auth import get_user_model
+from django.core.validators import MaxValueValidator
 from django.db import models
 from django.db.models import ManyToManyField
+from django_countries.fields import CountryField
 
 ShopUser = get_user_model()
+
+
+class BillingAddress(models.Model):
+    FIRST_NAME_MAX_LENGTH = 30
+    LAST_NAME_MAX_LENGTH = 30
+
+    ADDRESS_MAX_LENGTH = 50
+
+    CITY_MAX_LENGTH = 30
+
+    HIGHEST_ZIP_CODE = 99950
+
+    first_name = models.CharField(
+        max_length=FIRST_NAME_MAX_LENGTH,
+    )
+
+    last_name = models.CharField(
+        max_length=LAST_NAME_MAX_LENGTH,
+    )
+
+    address = models.CharField(
+        max_length=ADDRESS_MAX_LENGTH
+    )
+
+    second_address = models.CharField(
+        max_length=ADDRESS_MAX_LENGTH,
+        null=True,
+        blank=True,
+    )
+
+    country = CountryField()
+
+    city = models.CharField(
+        max_length=CITY_MAX_LENGTH
+    )
+
+    zip_code = models.IntegerField(
+        MaxValueValidator(HIGHEST_ZIP_CODE),
+    )
 
 
 # model product needs to have also photo
@@ -92,6 +133,13 @@ class Order(models.Model):
 
     ordered = models.BooleanField(
         default=False,
+    )
+
+    billing_address = models.ForeignKey(
+        BillingAddress,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
 
     def __str__(self):

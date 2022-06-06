@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import DetailView, ListView
 
+from audi_our_love_shop_project.shop.forms import CheckoutForm
 from audi_our_love_shop_project.shop.models import Product, OrderProduct, Order
 
 
@@ -80,14 +81,14 @@ def add_to_cart(request, pk):
         else:
             order.items.add(order_product)
             messages.info(request, "This item was added to your cart.")
-            return redirect(reverse('product', kwargs={'pk': product.pk}))
+            return redirect(reverse('checkout'))
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_product)
         messages.info(request, "This item was added to your cart.")
-        return redirect(reverse('product', kwargs={'pk': product.pk}))
+        return redirect(reverse('checkout'))
 
 
 @login_required
@@ -109,7 +110,7 @@ def remove_from_cart(request, pk):
             order.items.remove(order_product)
             order_product.delete()
             messages.info(request, "This product was removed from your cart.")
-            return redirect(reverse('product', kwargs={'pk': product.pk}))
+            return redirect(reverse('checkout'))
         else:
             messages.info(request, "This product was not in your cart")
             return redirect(reverse('product', kwargs={'pk': product.pk}))
@@ -159,6 +160,13 @@ def checkout(request):
         order = Order.objects.get(user=request.user, ordered=False)
         total = 0
         total_items_count = 0
+        if request.method == 'POST':
+            form = CheckoutForm(request.POST)
+            if form.is_valid():
+                form.save()
+                # return redirect(reverse())
+        else:
+            form = CheckoutForm()
 
         context = {
             'order': order
@@ -174,6 +182,7 @@ def checkout(request):
                 total_items_count += item.quantity
             context['total'] = total
             context['total_items_count'] = total_items_count
+        context['form'] = form
         return render(request, 'shop/checkout-page.html', context)
     except ObjectDoesNotExist:
         messages.warning(request, 'Cart is empty, you should add product to be able to access the checkout page!')
