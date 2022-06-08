@@ -11,4 +11,5 @@ urlpatterns = [
                   path('contacts/', include('audi_our_love_shop_project.contacts.urls')),
                   path('blog/', include('audi_our_love_shop_project.blogs.urls')),
                   path('shop/', include('audi_our_love_shop_project.shop.urls')),
+                  path('payments/', include('audi_our_love_shop_project.payments.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

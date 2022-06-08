@@ -1,9 +1,13 @@
 import os
 from pathlib import Path
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-hyy3^e)kn^=!@de7ivsany*(*h1%-+-^*oyo(rv61s@k4(l@u7'
+SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = True
 
@@ -24,6 +28,7 @@ APPLICATION_APPS = (
     'audi_our_love_shop_project.contacts',
     'audi_our_love_shop_project.blogs',
     'audi_our_love_shop_project.shop',
+    'audi_our_love_shop_project.payments',
 )
 
 THIRD_PARTY_APPS = (

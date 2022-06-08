@@ -4,10 +4,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, UpdateView
 
 from audi_our_love_shop_project.shop.forms import CheckoutForm
-from audi_our_love_shop_project.shop.models import Product, OrderProduct, Order
+from audi_our_love_shop_project.shop.helpers import order_details
+from audi_our_love_shop_project.shop.models import Product, OrderProduct, Order, BillingAddress
 
 
 class SearchResultsView(ListView):
@@ -77,7 +78,7 @@ def add_to_cart(request, pk):
         if order.items.filter(product_id=product.pk).exists():
             order_product.quantity += 1
             order_product.save()
-            return redirect(reverse('product', kwargs={'pk': product.pk}))
+            return redirect(reverse('checkout'))
         else:
             order.items.add(order_product)
             messages.info(request, "This item was added to your cart.")
@@ -158,30 +159,25 @@ class ProductDetailView(DetailView):
 def checkout(request):
     try:
         order = Order.objects.get(user=request.user, ordered=False)
+        if order.billing_address:
+            return redirect(reverse('stripe-payment'))
         total = 0
         total_items_count = 0
         if request.method == 'POST':
             form = CheckoutForm(request.POST)
             if form.is_valid():
-                form.save()
-                # return redirect(reverse())
+                billing_address = form.save()
+                order.billing_address = billing_address
+                order.save()
+                return redirect(reverse('stripe-payment'))
         else:
             form = CheckoutForm()
 
         context = {
-            'order': order
+            'order': order,
         }
-        if not order.items.all():
-            context['empty'] = 'Your cart is empty'
-        else:
-            for item in order.items.all():
-                if item.product.discount_price:
-                    total += item.get_total_discount_product_price()
-                else:
-                    total += item.get_total_product_price()
-                total_items_count += item.quantity
-            context['total'] = total
-            context['total_items_count'] = total_items_count
+
+        order_details(order, context, total, total_items_count)
         context['form'] = form
         return render(request, 'shop/checkout-page.html', context)
     except ObjectDoesNotExist:
@@ -190,3 +186,10 @@ def checkout(request):
     except TypeError:
         messages.warning(request, 'You must be authenticated to be able to access the checkout page!')
         return redirect(reverse('home'))
+
+
+class BillingAddressUpdateView(UpdateView):
+    model = BillingAddress
+    fields = '__all__'
+    success_url = '/payments/stripe/'
+    template_name = 'shop/edit-billing-address.html'

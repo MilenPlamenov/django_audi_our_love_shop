@@ -4,6 +4,8 @@ from django.db import models
 from django.db.models import ManyToManyField
 from django_countries.fields import CountryField
 
+from audi_our_love_shop_project.payments.models import StripePayments
+
 ShopUser = get_user_model()
 
 
@@ -44,6 +46,9 @@ class BillingAddress(models.Model):
     zip_code = models.IntegerField(
         MaxValueValidator(HIGHEST_ZIP_CODE),
     )
+
+    def __str__(self):
+        return f'Billing Address for {self.first_name} - {self.address}'
 
 
 # model product needs to have also photo
@@ -137,6 +142,13 @@ class Order(models.Model):
 
     billing_address = models.ForeignKey(
         BillingAddress,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
+    payment = models.ForeignKey(
+        StripePayments,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

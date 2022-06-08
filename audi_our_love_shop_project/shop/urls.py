@@ -2,7 +2,7 @@ from django.urls import path
 
 from audi_our_love_shop_project.shop.views import checkout, ProductDetailView, add_to_cart, remove_from_cart, \
     remove_single_item_from_cart, AccessoriesListView, CarCareListView, PartsListView, SearchResultsView, \
-    AllProductsListView
+    AllProductsListView, BillingAddressUpdateView
 
 urlpatterns = [
     path('home/', AllProductsListView.as_view(), name='home'),
@@ -15,4 +15,5 @@ urlpatterns = [
     path('add-to-cart/<int:pk>/', add_to_cart, name='add-to-cart'),
     path('remove-from-cart/<int:pk>/', remove_from_cart, name='remove-from-cart'),
     path('remove-single-item-from-cart/<int:pk>/', remove_single_item_from_cart, name='remove-single-item-from-cart'),
+    path('edit-billing-address/<int:pk>/', BillingAddressUpdateView.as_view(), name='edit-billing-address'),
 ]

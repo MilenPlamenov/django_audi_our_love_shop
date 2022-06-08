@@ -1,0 +1,144 @@
+{% extends 'shop/shop-base.html' %}
+
+{% block title %}<title>Edit your address</title>{% endblock %}
+
+{% block content %}
+
+    <main class="mt-5 pt-4">
+        <div class="container wow fadeIn">
+
+            <!-- Heading -->
+            <h1 class="my-4 h1 text-center fw-bold">Edit Address</h1>
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-8 mb-4">
+
+                    <!--Card-->
+                    <div class="card row justify-content-center">
+
+                        <!--Card content-->
+                        <form method="POST" class="card-body">
+                            {% csrf_token %}
+                            <!--Grid row-->
+                            <div class="row">
+
+                                <!--Grid column-->
+                                <div class="col-md-6 mb-2">
+
+                                    <!--firstName-->
+                                    <div class="md-form ">
+                                        {{ form.first_name }}
+                                        <label for="firstName" class="">First name</label>
+                                    </div>
+
+                                </div>
+                                <!--Grid column-->
+
+                                <!--Grid column-->
+                                <div class="col-md-6 mb-2">
+
+                                    <!--lastName-->
+                                    <div class="md-form">
+                                        {{ form.last_name }}
+                                        <label for="lastName" class="">Last name</label>
+                                    </div>
+
+                                </div>
+                                <!--Grid column-->
+                            </div>
+                            <!--Grid row-->
+
+                            <!--address-->
+                            <div class="md-form mb-5">
+                                {{ form.address }}
+                                <label for="address" class="">Address</label>
+                            </div>
+
+                            <!--address-2-->
+                            <div class="md-form mb-5">
+                                {{ form.second_address }}
+                                <label for="address-2" class="">Address 2 (optional)</label>
+                            </div>
+
+                            <!--Grid row-->
+                            <div class="row">
+
+                                <!--Grid column-->
+                                <div class="col-lg-4 col-md-12 mb-4">
+
+                                    <label for="country">Country</label>
+                                    <div class="custom-select d-block w-100">
+                                        {{ form.country }}
+                                    </div>
+                                </div>
+                                <!--Grid column-->
+
+                                <!--Grid column-->
+                                <div class="col-lg-4 col-md-6 mb-4">
+
+                                    <label for="state">City</label>
+
+                                    {{ form.city }}
+
+                                </div>
+                                <!--Grid column-->
+
+                                <!--Grid column-->
+                                <div class="col-lg-4 col-md-6 mb-4">
+
+                                    <label for="zip">Zip</label>
+                                    {{ form.zip_code }}
+
+                                </div>
+                                <!--Grid column-->
+
+                            </div>
+                            <!--Grid row-->
+
+                            <div class="d-block my-3">
+                                <div class="custom-control custom-radio">
+                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input"
+                                           checked required>
+                                    <label class="custom-control-label" for="credit">Stripe</label>
+                                </div>
+                                {#                                <div class="custom-control custom-radio">#}
+                                {#                                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input"#}
+                                {#                                           required>#}
+                                {#                                    <label class="custom-control-label" for="debit">Debit card</label>#}
+                                {#                                </div>#}
+                                {#                                <div class="custom-control custom-radio">#}
+                                {#                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input"#}
+                                {#                                           required>#}
+                                {#                                    <label class="custom-control-label" for="paypal">Paypal</label>#}
+                                {#                                </div>#}
+                            </div>
+
+                            <hr class="mb-4">
+                            <hr>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="same-address">
+                                <label class="custom-control-label" for="same-address">Shipping address is the same as
+                                    my billing address</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="save-info">
+                                <label class="custom-control-label" for="save-info">Save this information for next
+                                    time</label>
+                            </div>
+
+                            <hr>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Save and Continue to checkout</button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+                    <!--/.Card-->
+{% endblock %}
