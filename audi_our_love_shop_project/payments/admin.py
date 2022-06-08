@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from audi_our_love_shop_project.payments.models import StripePayments
+
+
+@admin.register(StripePayments)
+class StripePaymentsAdmin(admin.ModelAdmin):
+    pass

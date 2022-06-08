@@ -23,3 +23,7 @@ class StripePayments(models.Model):
     timestamp = models.DateTimeField(
         auto_now_add=True,
     )
+
+    def __str__(self):
+        return f'Stripe payment for {self.user}. Price: {self.total} on {self.timestamp}'
+
