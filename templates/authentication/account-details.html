@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>Account #{{ object.pk }}</title>{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link href="{% static 'css/shop/css/bootstrap.min.css/' %}" rel="stylesheet">
+    <link href="{% static 'css/shop/css/mdb.min.css/' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <h1 class="text-center mt-4">Order history</h1>
+    <div class="p-5">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        {% if orders %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="amy-crisp-gradient">
+                                    <tr>
+                                        <th scope="col" class="text-center">Order ID</th>
+                                        <th scope="col" class="text-center">Ordered date</th>
+                                        <th scope="col" class="text-center">Order total price</th>
+                                        <th scope="col" class="text-center">Ordered</th>
+                                        <th scope="col" class="text-center">Request refund until</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <td class="text-center">{{ order.pk }}</td>
+                                            <td class="text-center">{{ order.ordered_date }}</td>
+                                            <td class="text-center">{{ order.total_price }}</td>
+                                            {% if order.ordered %}
+                                                <td class="text-center text-success"><i class="fas fa-check"></i></td>
+                                                <td class="text-center">{{ order.valid_refund }}</td>
+                                            {% else %}
+                                                <td class="text-center text-danger"><i class="fas fa-times"></i></td>
+                                                <td class="text-center">-</td>
+                                            {% endif %}
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <div class="card-body text-center">
+                                <h5 class="card-title m-b-0 p-3">No orders yet !</h5>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -50,7 +50,8 @@
             </ul>
             <ul class="navbar-nav  mb-2 mb-lg-0 ms-lg-4">
                 {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" aria-current="page" href="#">{{ request.user }}</a>
+                    <li class="nav-item"><a class="nav-link" aria-current="page"
+                                            href="{% url 'account-details' request.user.pk %}">{{ request.user }}</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'logout' %}">Log out</a>
                     </li>

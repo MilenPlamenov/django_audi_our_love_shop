@@ -7,7 +7,8 @@ class ContactsModel(models.Model):
     LAST_NAME_MAX_LENGTH = 30
 
     DEFAULT_CHOICE = '--Select Your Issue--'
-    REQUEST_INVOICE_FOR_ORDER = 'Request Invoice for order'
+    REQUEST_INVOICE_FOR_ORDER = 'Request invoice for order'
+    REQUEST_REFUND_FOR_ORDER = 'Request refund for order'
     REQUEST_ORDER_STATUS = 'Request order status'
     HAVE_NOT_RECEIVED_CASHBACK = "Haven't received cashback yet"
     OTHER = 'Other'
@@ -15,6 +16,7 @@ class ContactsModel(models.Model):
     CONTACT_CHOICES = (
         (DEFAULT_CHOICE, DEFAULT_CHOICE),
         (REQUEST_INVOICE_FOR_ORDER, REQUEST_INVOICE_FOR_ORDER),
+        (REQUEST_REFUND_FOR_ORDER, REQUEST_REFUND_FOR_ORDER),
         (REQUEST_ORDER_STATUS, REQUEST_ORDER_STATUS),
         (HAVE_NOT_RECEIVED_CASHBACK, HAVE_NOT_RECEIVED_CASHBACK),
         (OTHER, OTHER),
@@ -26,4 +28,4 @@ class ContactsModel(models.Model):
     reason = models.CharField(max_length=100, choices=CONTACT_CHOICES, default='--Select Your Issue--')
 
     def __str__(self):
-        return self.subject
+        return self.content

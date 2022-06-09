@@ -6,6 +6,7 @@ from django_countries.fields import CountryField
 
 from audi_our_love_shop_project.payments.models import StripePayments
 
+import datetime
 ShopUser = get_user_model()
 
 
@@ -153,6 +154,14 @@ class Order(models.Model):
         null=True,
         blank=True,
     )
+
+    @property
+    def total_price(self):
+        return sum([product.product.price * product.quantity for product in self.items.all()])
+
+    @property
+    def valid_refund(self):
+        return self.ordered_date + datetime.timedelta(days=30)
 
     def __str__(self):
         return f'Order for user: {self.user}'
