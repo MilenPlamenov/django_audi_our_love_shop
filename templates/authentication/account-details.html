@@ -26,6 +26,7 @@
                                         <th scope="col" class="text-center">Order total price</th>
                                         <th scope="col" class="text-center">Ordered</th>
                                         <th scope="col" class="text-center">Request refund until</th>
+                                        <th scope="col" class="text-center">Requested for refund</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -37,8 +38,16 @@
                                             {% if order.ordered %}
                                                 <td class="text-center text-success"><i class="fas fa-check"></i></td>
                                                 <td class="text-center">{{ order.valid_refund }}</td>
+                                                {% if order.refund_requested %}
+                                                    <td class="text-center text-success"><i class="fas fa-check"></i>
+                                                    </td>
+                                                {% else %}
+                                                    <td class="text-center text-danger"><i class="fas fa-times"></i>
+                                                    </td>
+                                                {% endif %}
                                             {% else %}
                                                 <td class="text-center text-danger"><i class="fas fa-times"></i></td>
+                                                <td class="text-center">-</td>
                                                 <td class="text-center">-</td>
                                             {% endif %}
 

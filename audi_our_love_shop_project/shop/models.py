@@ -7,6 +7,7 @@ from django_countries.fields import CountryField
 from audi_our_love_shop_project.payments.models import StripePayments
 
 import datetime
+
 ShopUser = get_user_model()
 
 
@@ -138,6 +139,14 @@ class Order(models.Model):
     ordered_date = models.DateTimeField()
 
     ordered = models.BooleanField(
+        default=False,
+    )
+
+    refund_requested = models.BooleanField(
+        default=False,
+    )
+
+    refunded = models.BooleanField(
         default=False,
     )
 
