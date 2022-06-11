@@ -17,7 +17,7 @@ stripe.api_key = env('STRIPE_API_KEY')
 def stripe_payment_view(request):
     order = Order.objects.get(user=request.user, ordered=False)
     context = {
-        'order': order
+        'order': order,
     }
     total = 0
     total_items_count = 0

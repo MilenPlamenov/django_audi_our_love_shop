@@ -1,6 +1,4 @@
 from django import forms
-from django_countries.fields import CountryField
-from django_countries.widgets import CountrySelectWidget
 
 from audi_our_love_shop_project.shop.models import BillingAddress
 
@@ -40,6 +38,4 @@ class CheckoutForm(forms.ModelForm):
                     'class': 'form-control custom-select d-block w-100',
                 }
             ),
-
         }
-# 'class': 'custom-select d-block w-100',
