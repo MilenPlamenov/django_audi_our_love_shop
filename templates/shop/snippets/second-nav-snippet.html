@@ -1,0 +1,84 @@
+<div class="mt-5 pt-4">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark mdb-color  mt-3 mb-6">
+
+    <!-- Navbar brand -->
+    <span class="navbar-brand">Categories:</span>
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+            aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="basicExampleNav">
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            {% if  'home' in request.path %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">All</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">All</a>
+                </li>
+            {% endif %}
+
+            {% if  'parts' in request.path %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'parts' %}">Parts</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'parts' %}">Parts</a>
+                </li>
+            {% endif %}
+
+            {% if  'accessories' in request.path %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'accessories' %}">Accessories</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accessories' %}">Accessories</a>
+                </li>
+            {% endif %}
+
+            {% if  'car-care' in request.path %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'car-care' %}">Car Care</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'car-care' %}">Car Care</a>
+                </li>
+            {% endif %}
+
+        </ul>
+        <!-- Links -->
+
+        <form class="form-inline" action="{% url 'search-results' %}" method="get">
+            <div class="md-form my-0">
+                <input name="searched" class="form-control mr-sm-2" type="text"
+                       placeholder="Search with keywords..." aria-label="Search with keywords...">
+            </div>
+        </form>
+    </div>
+    <!-- Collapsible content -->
+
+</nav>
+<!--/.Navbar-->
