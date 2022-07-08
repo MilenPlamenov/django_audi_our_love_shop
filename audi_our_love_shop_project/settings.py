@@ -33,6 +33,7 @@ APPLICATION_APPS = (
 
 THIRD_PARTY_APPS = (
     'django_countries',
+    'rest_framework',
 )
 
 INSTALLED_APPS = DJANGO_APPS + APPLICATION_APPS + THIRD_PARTY_APPS
