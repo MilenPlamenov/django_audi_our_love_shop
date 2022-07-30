@@ -4,7 +4,11 @@
 {% block title %}<title>About page</title>{% endblock %}
 
 {% block content %}
-
+    <style>
+        #more {
+            display: none;
+        }
+    </style>
     <section class="p-1">
         <div class="text-center">
             <h2 class="title p-3">About us</h2>
@@ -20,12 +24,13 @@
                             <h3 class="inner-title">How it started...</h3>
                             <p class="case-description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
                                 diam nonummy nibh euiyd tincidunt ut laoreet dolore magna aliquam nibh utpat.Ullamcorper
-                                suscipit lobo nibh euiyd tinci- dunt ut laoreet.</p>
-                            <p>
+                                suscipit lobo nibh euiyd tinci- dunt ut laoreet.
+
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem impedit molestias cumque
-                                dolorum, sunt, provident blanditiis tempora, aut explicabo error ipsa repudiandae.
+                                dolorum<span id="dots">...</span><span id="more">, sunt, provident blanditiis tempora, aut explicabo error ipsa repudiandae.
                                 Dolores eius eaque eum mollitia esse nisi necessitatibus distinctio ea, dolorem non,
-                                optio minima temporibus blanditiis, quidem aperiam!
+                                optio minima temporibus blanditiis, quidem aperiam!</span>
+                                <button class="btn btn-amber btn-sm" onclick="showMore()" id="showMoreBtn">Read more</button>
                             </p>
                         </div>
                     </div>
@@ -65,5 +70,24 @@
             </div>
         </div>
     </section>
+{% endblock %}
 
+{% block js %}
+    <script>
+        function showMore() {
+            let dots = document.getElementById("dots");
+            let moreText = document.getElementById("more");
+            let btnText = document.getElementById("showMoreBtn");
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Read more";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Read less";
+                moreText.style.display = "inline";
+            }
+        }
+    </script>
 {% endblock %}
