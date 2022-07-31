@@ -6,7 +6,7 @@ from audi_our_love_shop_project.contacts.models import ContactsModel
 class ContactsForm(forms.ModelForm):
     class Meta:
         model = ContactsModel
-        fields = ['first_name', 'last_name', 'email', 'reason', 'content']
+        fields = ('first_name', 'last_name', 'email', 'reason', 'content')
         widgets = {
             'first_name': forms.TextInput(
                 attrs={
